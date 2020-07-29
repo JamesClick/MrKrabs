@@ -1,4 +1,4 @@
-# Mr. Krabs - Automatic Stirpe invoice reminder for Slack
+# Mr. Krabs - Automatic Stripe invoice reminder for Slack
 
 ## Screenshot
 ![Screenshot of the Slack message this script generates](screenshot.png)
