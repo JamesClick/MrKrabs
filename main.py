@@ -2,7 +2,7 @@ import schedule, time, json, requests, stripe
 
 
 def selfConfig():
-    import os
+    import os, sys
 
     if "KRABS" in os.environ:
         intermediateDict = json.loads(os.environ["KRABS"])
@@ -12,6 +12,8 @@ def selfConfig():
             intermediateDict["StripeCustomer"],
             intermediateDict["SlackHook"],
         )
+    else:
+        sys.exit("Could not find KRABS envvar.")
 
 
 class Krabs:
@@ -80,5 +82,10 @@ def checkCusStatus(Krabs, Slack):
 
 if __name__ == "__main__":
     selfConfig()
+    schedule.every(12).hours.do(
+        checkCusStatus, Krabs(StripeCustomer, StripeKey), Slack(SlackHook)
+    )
 
-    schedule.every(12).hours.do(checkCusStatus)
+    while True:
+        schedule.run_pending()
+        time.sleep(5)
