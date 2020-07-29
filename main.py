@@ -53,12 +53,6 @@ class Slack:
         ]
         return msgTemplate
 
-    def __checkDueDate(self, dueDate):
-        if time.time() - dueDate <= 172800:
-            return True
-        else:
-            return False
-
     def generateInvBlock(self, inv):
         templateDict = {
             "type": "section",
