@@ -27,11 +27,11 @@ class Krabs:
     def getCusInvList(self):
         return stripe.Invoice.list(customer=self.CustomerID, status="open")["data"]
 
-    def isPaid(Self):
-        if stripe.Customer.retrieve(id=self.customerID)["amount_due"] != 0:
-            return False
-        else:
+    def isPaid(self):
+        if len(stripe.Invoice.list(customer=self.CustomerID, status="open")["data"]) == 0:
             return True
+        else:
+            return False
 
 
 class Slack:
@@ -48,7 +48,7 @@ class Slack:
                 "text": {
                     "type": "plain_text",
                     "emoji": True,
-                    "text": f"Hello yes, I have detected unpaid invoices for {stripeCustomerObj['description']}:",
+                    "text": f"Hello yes, I have detected unpaid invoices for {stripeCustomerObj['description'] or stripeCustomerObj['email']}:",
                 },
             },
             {"type": "divider"},
@@ -71,10 +71,10 @@ class Slack:
         return templateDict
 
 
-def checkCusStatus(Krabs, Slack):
-    if Krabs.isPaid != True:
-        InvList = Krabs.getCusInvList()
-        linkList = Slack.generateMsgHeader(Krabs.getCustomerInfo())
+def checkCusStatus(KrabsObj, Slack):
+    if KrabsObj.isPaid() == False:
+        InvList = KrabsObj.getCusInvList()
+        linkList = Slack.generateMsgHeader(KrabsObj.getCustomerInfo())
         for x in InvList:
             linkList.append(Slack.generateInvBlock(x))
         Slack.sendMessage(json.dumps(linkList))
