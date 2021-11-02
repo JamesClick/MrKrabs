@@ -1,4 +1,7 @@
-# Mr. Krabs - Automatic Stripe invoice reminder for Slack
+# This Game On Entertainment interview question is no longer to be used.
+See: [https://documentation.in.goe/tech/interviewing#2022_protocol](https://documentation.in.goe/tech/interviewing#2022_protocol)
+
+## Mr. Krabs - Automatic Stripe invoice reminder for Slack
 
 ## Screenshot
 ![Screenshot of the Slack message this script generates](screenshot.png)
